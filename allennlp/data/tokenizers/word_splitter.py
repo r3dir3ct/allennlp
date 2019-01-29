@@ -148,12 +148,12 @@ class SpacyWordSplitter(WordSplitter):
         self.spacy = get_spacy_model(language, pos_tags, parse, ner)
 
     @overrides
-    def batch_split_words(self, sentences: List[str]) -> List[List[Token]]:
+    def batch_split_words(self, sentences: List[str]) -> List[List[spacy.tokens.token.Token]]:
         return [_remove_spaces(tokens)
                 for tokens in self.spacy.pipe(sentences, n_threads=-1)]
 
     @overrides
-    def split_words(self, sentence: str) -> List[Token]:
+    def split_words(self, sentence: str) -> List[spacy.tokens.token.Token]:
         # This works because our Token class matches spacy's.
         return _remove_spaces(self.spacy(sentence))
 
